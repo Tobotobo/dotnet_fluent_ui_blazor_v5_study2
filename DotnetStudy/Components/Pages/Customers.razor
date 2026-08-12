@@ -1,0 +1,95 @@
+@page "/customers"
+@attribute [StreamRendering]
+
+<PageTitle>顧客一覧</PageTitle>
+
+@* タイトル *@
+<FluentStack Orientation="Orientation.Horizontal"
+             VerticalAlignment="VerticalAlignment.Center"
+             HorizontalGap="10"
+             Margin="0 0 10 0">
+    <FluentIcon 
+        Value="@(new Icons.Regular.Size48.ContactCard())" 
+        Color="@Color.Default" 
+        Margin="0"/>
+    <FluentText 
+        Size="TextSize.Size800"
+        Margin="0 0 2 0">
+        顧客一覧
+    </FluentText>
+</FluentStack>
+
+@* 検索条件 *@
+<FluentCard Shadow="CardShadow.None">
+    <FluentStack 
+        Orientation="Orientation.Horizontal" 
+        HorizontalGap="10px" 
+        Wrap="true">
+        
+        <FluentTextInput
+            Label="キーワード"
+            Placeholder="顧客名、メールアドレス"
+            @bind-Value="_criteriaKeyword"/>
+
+        <FluentDatePicker
+            Label="登録日（開始）"
+            @bind-Value="_criteriaFrom"/>
+
+        <FluentDatePicker
+            Label="登録日（終了）"
+            @bind-Value="_criteriaTo"/>
+    </FluentStack>
+
+    <FluentStack 
+        Orientation="Orientation.Horizontal" 
+        HorizontalGap="10px" 
+        Wrap="false" 
+        HorizontalAlignment="@HorizontalAlignment.Center">
+        
+        <FluentButton
+            Appearance="ButtonAppearance.Primary"
+            @onclick="SearchAsync">
+            検索
+        </FluentButton>
+
+        <FluentButton
+            Appearance="ButtonAppearance.Default"
+            @onclick="ClearAsync">
+            クリア
+        </FluentButton>
+    </FluentStack>
+</FluentCard>
+
+@* 検索結果 *@
+<FluentPaginator State="@_pagination" />
+<FluentDataGrid
+    @ref="_grid"
+    TGridItem="Customer"
+    ItemsProvider="@LoadCustomersAsync"
+    Pagination="@_pagination"
+    ResizableColumns="true"
+    ShowHover="true"
+    GridTemplateColumns="100px 1.4fr 1.8fr 1fr 140px">
+
+    <PropertyColumn
+        Title="ID"
+        Property="@(x => x.Id)"/>
+
+    <PropertyColumn
+        Title="顧客名"
+        Property="@(x => x.Name)"/>
+
+    <PropertyColumn
+        Title="メールアドレス"
+        Property="@(x => x.Email)"/>
+
+    <PropertyColumn
+        Title="部署"
+        Property="@(x => x.Department)"/>
+
+    <PropertyColumn
+        Title="登録日"
+        Property="@(x => x.CreatedAt)"
+        Format="yyyy/MM/dd"/>
+</FluentDataGrid>
+<FluentPaginator State="@_pagination" />
