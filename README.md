@@ -141,6 +141,9 @@ nav.fluent-nav {
 
 * 日付入力でカレンダーが表示されない
   * なぜ？これは Static SSR でも動きそうだが...
+  * 以下の注記が関係している？  
+    https://v5.fluentui-blazor.net/DateTime  
+    > FluentCalendar および FluentDatePicker コンポーネントは、EditForm および FluentEditForm 要素との完全な互換性がまだありません。エラー メッセージ、必須項目メッセージ、検証メッセージなど、一部の機能が欠落しています。
 
 
 * 読み込み中のグルグルが表示されない
